@@ -1,0 +1,373 @@
+@import url('https://fonts.googleapis.com/css2?family=Jolly+Lodger&display=swap');
+
+/* 1. Use a more-intuitive box-sizing model */
+*, *::before, *::after {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  
+  /* 2. Remove default margin */
+  * {
+    margin: 0;
+  }
+  
+  body {
+    /* 3. Add accessible line-height */
+    line-height: 1.5;
+    /* 4. Improve text rendering */
+    -webkit-font-smoothing: antialiased;
+    font-family: "Jolly Lodger", system-ui;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 1.75rem;
+    color: #d6b35a !important;
+
+    overflow: hidden;
+  }
+  
+  /* 5. Improve media defaults */
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  
+  /* 6. Inherit fonts for form controls */
+  input, button, textarea, select {
+    font: inherit;
+  }
+  
+  /* 7. Avoid text overflows */
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  
+  /* 8. Improve line wrapping */
+  p {
+    text-wrap: pretty;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    text-wrap: balance;
+  }
+  
+  /*
+    9. Create a root stacking context
+  */
+  #root, #__next {
+    isolation: isolate;
+  }
+
+  body {
+    background-color: #000000;
+    background-image: url(bgr.jpg); 
+    background-size: cover;
+    cursor: url(hand.svg), auto;
+    position: relative;
+  }
+
+  .main-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+    z-index: 10000;
+    background: rgb(52,14,3);
+    background: radial-gradient(circle, rgba(50, 13, 3, 1) 0%, rgba(8,2,0,1) 100%);
+    text-align: center;
+    gap: 13rem;
+    border: #523e06 1px solid;
+  }
+
+  .start-game {
+    width: 60%;
+    margin-top: 4rem;;
+
+  }
+
+  main {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+  }
+  
+  .container {
+    margin-inline: 10vw;
+  }
+
+  .frame {
+    position: fixed;
+    top: 16px;
+    border: 1px solid #76211e;
+    background: rgb(52,14,3);
+    background: radial-gradient(circle, rgba(50, 13, 3, 0.9) 0%, rgba(8,2,0,.9) 100%);
+    filter: drop-shadow(0 0 20px #000);
+    height: 89vh;
+    width: 80vw;
+  }
+
+  .frame-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    height: 100%;
+  }
+
+  .corner-tl {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .corner-tr {
+    position: absolute;
+    right: 0;
+    top: 0;
+    rotate: 90deg;
+    z-index: -1;
+  }
+
+  .corner-bl {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    rotate: 270deg;
+    z-index: -1;
+  }
+
+  .corner-br {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    rotate: 180deg;
+    z-index: -1;
+  }
+
+  .floor_counter__container {
+    padding-inline: 10rem;
+    background-image: url(bar.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+  }
+
+  .first-row,
+  .second-row {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+  }
+
+  .first-row div,
+  .second-row div {
+    padding: .6rem;
+    width: 220px;
+    aspect-ratio: 1/1.3;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    transition: all .5s ease;
+    cursor: url(hand.svg), auto;
+  }
+
+  button:hover {
+    filter: drop-shadow(0 0 10px #5e4300);
+    transform: translateY(-.3rem);
+  }
+
+  .health,
+  .card,
+  .deck {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10rem;
+  }
+
+  .card img {
+    transition: all .5s ease;
+  }
+
+  /* ----------------- Discard Pile ----------------- */
+
+  .discard-pile__description {
+    font-size: 1.25rem;
+    rotate: -90deg;
+    text-align: center;
+    inset: 0;
+    left: 20px;
+    height: 100%;
+    width: 100%;
+    bottom: 100%;
+    position: absolute;
+  }
+
+  .discard-pile img {
+    filter: drop-shadow(-5px 10px 5px #000);
+  }
+
+  .card img:hover {    
+    transform: translateY(-.3rem);
+    filter: drop-shadow(0 5px 20px #000);
+    scale: 1.04;
+  }
+
+  .health {
+    position: relative;
+  }
+
+  .health img {
+    position: relative;
+    z-index: 99;
+    width: 220px;
+    animation: pulse 2000ms infinite;
+  }
+
+  .health-counter {
+    position: absolute;
+    z-index: 100;
+    font-size: 2.2rem;
+    color: #e6c3c2;
+    top: 12px;
+  }
+
+  .health-fill {
+    position: absolute;
+    max-height: 158px;
+    max-width: 158px;
+    background-color: #ff0000;
+    z-index: 101;
+    border-radius: 100vw !important;
+    top: 72px;
+    mix-blend-mode: soft-light;
+  }
+
+  @keyframes pulse {
+    0% {
+      filter: drop-shadow(0 0 10px #000000);
+    }
+    33% {
+      filter: drop-shadow(0 0 40px #000000);
+    }
+    66% {
+      filter: drop-shadow(0 0 40px #000000);
+    }
+    100% {
+      filter: drop-shadow(0 0 10px #000000);
+    }
+  }
+
+  .discard-pile {
+    rotate: 90deg;
+    left: 35px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10rem;
+  }
+
+
+
+  footer {
+    position: fixed;
+    background: #0f0000cc;
+    border-top: 1px solid #54400d;
+    height: 8vh;
+    width: 100vw;
+    bottom: 0;
+    align-items: center;
+    align-content: center;
+    padding-inline: 5rem;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;    
+  }
+
+  .trinkets {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .trinkets div {
+    border: 1px solid #840000;
+    padding: .6rem;
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+  }
+
+  .gold {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: 2rem;
+  }
+
+  .active {
+    filter: drop-shadow(0 0 10px #dfbd65) !important;
+  }
+
+  /* ---------------- Discard Pile Modal ---------------- */
+
+  .discard-pile__modal {
+    position: fixed;
+    inset: 0;
+    place-self: center;
+    background: rgba(0, 0, 0, 1);
+    /* display: flex; */
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    border: #d6b35a 1px solid;
+    border-radius: 16px;
+    width: 80vw;
+    height: 90vh;
+  }
+
+  .modal__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+  }
+
+  .modal__header span {
+    padding: 1rem;
+    font-size: 2rem;
+  }
+
+  .modal__body {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    place-self: center;
+  }

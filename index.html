@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deceitful Pretender's The Periphery</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+   
+    <section class="main-menu">
+        <div class="container">
+            <img src="game-logo.png" alt="" class="game-logo">
+            <button class="start-game"><img src="start-game_button.png" alt=""></button>
+            <div class="corner-tl"><img src="corner.png" alt=""></div>
+            <div class="corner-tr"><img src="corner.png" alt=""></div>
+            <div class="corner-bl"><img src="corner.png" alt=""></div>
+            <div class="corner-br"><img src="corner.png" alt=""></div>
+            <div class="sparks"></div>
+        </div>
+    </section>
+    
+    
+    <main>
+        <div class="frame">
+            <div class="corner-tl"><img src="corner.png" alt=""></div>
+            <div class="corner-tr"><img src="corner.png" alt=""></div>
+            <div class="corner-bl"><img src="corner.png" alt=""></div>
+            <div class="corner-br"><img src="corner.png" alt=""></div>
+            <div class="frame-content">
+                <h2 class="floor_counter__container">Floor: <span class="floor_counter">1</span></h2>                
+                <div class="first-row">
+                    <div class="card"><img src="card_empty.png" alt=""></div>
+                    <div class="card"><img src="card_empty.png" alt=""></div>
+                    <div class="card"><img src="card_empty.png" alt=""></div>
+                    <div class="card"><img src="card_empty.png" alt=""></div>
+                </div>
+                <div class="buttons">
+                    <button class="defer"><img src="defer_button.png" alt=""></button>
+                    <button class="barehand"><img src="fight_button.png" alt=""></button>
+                </div>
+                <div class="second-row">
+                    <div class="health">
+                        <img src="dice.png" alt="">
+                        <span class="health-counter">20/20</span>
+                        <div class="health-fill"></div>
+                    </div>
+                    <div class="deck"><img src="deck.png" alt=""></div>
+                    <div class="card"><img src="card_empty.png" alt=""></div>
+                    <div class="discard-pile">
+                        <span class="discard-pile__description">Discard Pile</span>
+                        <img src="deck.png" alt=""></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="container footer-container">
+
+                <div class="trinkets">
+                    <p>Trinkets:</p>
+                    <div class="trinket"></div>
+                    <div class="trinket"></div>
+                    <div class="trinket"></div>
+                </div>
+
+                <div class="gold">
+                    <img src="/gold.png" alt="">&nbsp;<span class="gold-counter">0</span>
+                </div>
+
+            </div>
+        </footer>
+    </main>
+
+    <div class="discard-pile__modal"> 
+        <div class="modal__content">
+            <div class="modal__header">
+                <h2>Discard Pile</h2>
+                <span class="close-modal">X</span>
+            </div>
+            <div class="modal__body">
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+                <div class="card"><img src="card_empty.png" alt=""></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add black screen overlay
+        const blackScreen = document.createElement('div');
+        blackScreen.style.position = 'fixed';
+        blackScreen.style.top = '0';
+        blackScreen.style.left = '0';
+        blackScreen.style.width = '100%';
+        blackScreen.style.height = '100%';
+        blackScreen.style.backgroundColor = 'black';
+        blackScreen.style.zIndex = '100000';
+        blackScreen.style.transition = 'opacity 2s ease-in-out';
+        document.body.appendChild(blackScreen);
+
+        // Play main theme and fade out black screen
+        const mainTheme = new Audio('main-theme.mp3');
+        
+        window.addEventListener('load', () => {
+            mainTheme.play();
+            setTimeout(() => {
+                blackScreen.style.opacity = '0';
+                setTimeout(() => {
+                    blackScreen.remove();
+                }, 2000);
+            }, 500); // Delay before fade out
+        });
+
+        // Sounds
+        const startGameSound = new Audio('start-game.mp3');
+
+        document.querySelector('.start-game').addEventListener('click', () => {
+            startGameSound.play();
+        });
+
+        // Fight barehand sound
+        document.querySelector('.barehand').addEventListener('click', () => {
+            const fightBarehandSound = new Audio('bash.mp3');
+            fightBarehandSound.play();
+        });
+        
+
+        // Add click sound
+        document.addEventListener('click', () => {
+            const tap = new Audio('tap.mp3');
+            tap.play();
+        });
+
+        // start game
+        document.querySelector('.start-game').addEventListener('click', () => {
+            const mainMenu = document.querySelector('.main-menu');
+            mainMenu.style.transition = 'transform 1s ease-in-out';
+            mainMenu.style.transform = 'translateY(-100%)';
+        });
+
+        // Add sparks
+        const sparksContainer = document.querySelector('.sparks');
+
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.className = 'spark';
+            spark.style.position = 'absolute';
+            spark.style.width = '1px';
+            spark.style.height = '6px';
+            spark.style.backgroundColor = 'orange';
+            spark.style.borderRadius = '50%';
+            spark.style.bottom = '0';
+            spark.style.left = `${Math.random() * 100}%`;
+            spark.style.opacity = Math.random();
+
+            sparksContainer.appendChild(spark);
+
+            const duration = 3000 + Math.random() * 2200;
+            const amplitude = 50 + Math.random() * 80;
+
+            const keyframes = [
+                { transform: `translateX(0) translateY(0)`, opacity: 1 },
+                { transform: `translateX(${Math.random() > 0.5 ? amplitude : -amplitude}px) translateY(-100vh)`, opacity: 0 }
+            ];
+
+            spark.animate(keyframes, {
+                duration: duration,
+                easing: 'ease-in-out',
+                fill: 'forwards'
+            }).onfinish = () => {
+                spark.remove();
+            };
+        }
+
+        setInterval(() => {
+            createSpark();
+        }, 40);
+
+
+        // Add particle effect
+        document.addEventListener('click', (event) => {
+            const particleCount = 250;
+            const particles = [];
+
+            for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'dust-particle';
+            particle.style.position = 'absolute';
+            particle.style.width = '2px';
+            particle.style.height = '2px';
+            particle.style.backgroundColor = 'rgba(200, 200, 200, .1)';
+            particle.style.borderRadius = '50%';
+            particle.style.boxShadow = "10px 20px 30px red";
+            particle.style.pointerEvents = 'none';
+            particle.style.left = `${event.pageX}px`;
+            particle.style.top = `${event.pageY}px`;
+
+            document.body.appendChild(particle);
+            particles.push(particle);
+
+            const angle = Math.random() * 2 * Math.PI;
+            const distance = Math.random() * 80;
+            const x = Math.cos(angle) * distance;
+            const y = Math.sin(angle) * distance;
+
+            particle.animate(
+                [
+                { transform: 'translate(0, 0)', opacity: 1 },
+                { transform: `translate(${x}px, ${y}px)`, opacity: 0 }
+                ],
+                {
+                duration: 1000,
+                easing: 'ease-out',
+                fill: 'forwards'
+                }
+            ).onfinish = () => {
+                particle.remove();
+            };
+            }
+        });
+
+        // Add .active class to a .card on click
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', () => {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+            });
+        });
+
+        // Open discard pile modal
+        document.querySelector('.discard-pile').addEventListener('click', () => {
+            document.querySelector('.discard-pile__modal').style.display = 'flex';
+        });
+
+        // Close discard pile modal
+        document.addEventListener('click', (event) => {
+            const modal = document.querySelector('.discard-pile__modal');
+            const isClickInsideModal = modal.contains(event.target);
+            const isClickOnDiscardPile = event.target.closest('.discard-pile');
+
+            if (!isClickInsideModal && !isClickOnDiscardPile) {
+            modal.style.display = 'none';
+            }
+        });
+
+        document.querySelector('.close-modal').addEventListener('click', () => {
+            document.querySelector('.discard-pile__modal').style.display = 'none';
+        });
+   </script>
+</body>
+</html>
